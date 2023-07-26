@@ -1,0 +1,20 @@
+body{
+    background-color: rgb(187, 186, 185);
+}
+#form{
+    background-color: rgb(109, 92, 92);
+    width: 25%;
+    margin:160px auto;
+    padding: 75px;
+    box-shadow: 10px 10px 5px rgb(175, 165, 175);
+    border-radius: 6px;
+}
+#btn
+{
+    color: rgb(248, 245, 241);
+    background-color: rgb(202, 199, 197);
+    padding: 10px;
+    font-size: large;
+    border-radius: 10px;
+}
+
