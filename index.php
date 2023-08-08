@@ -1,6 +1,10 @@
+
 <?php
 session_start();
 
+if (isset($_SESSION["admin_username"])) {
+    echo '<h2>Welcome, ' . $_SESSION["admin_username"] . '</h2>';
+}
 
 if (isset($_SESSION['username'])) {
     $welcomeMessage = "Welcome, " . $_SESSION['username'];
@@ -83,25 +87,38 @@ if (isset($_SESSION['username'])) {
     </nav>
 
   >
-    <div class="container">
-        <h1>Welcome to Our Online Supermarket!</h1>
-        
-        <div class="product-card">
-            <img src="product1.jpg" alt="Product 1">
-            <h2>Red Bull Energy Drink</h2>
-            <p>250ml(4Pack).</p>
-            <p>Price: 110 L.E</p>
-            <a href="cart.php">Add to Cart</a>
-        </div>
-        
-        <div class="product-card">
-            <img src="product2.jpg" alt="Product 2">
-            <h2>Nutella Ferrero Hazelnut Spread</h2>
-            <p>With Cocoa- 350gm</p>
-            <p>Price: 140 L.E</p>
-            <a href="cart.php">Add to Cart</a>
-        </div>
-        
+   
+  <h3>Products:</h3>
+    <div class="products">
+        <?php
+        $host = 'localhost';
+        $username = 'root';
+        $password = '';
+        $database = 'db1';
+
+        $conn = new mysqli($host, $username, $password, $database);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT * FROM products";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="product">';
+                echo '<img src="' . $row['photo'] . '" alt="' . $row['name'] . '">';
+                echo '<h4>' . $row['name'] . '</h4>';
+                echo '<p>' . $row['description'] . '</p>';
+                echo '<p>Price: $' . $row['price'] . '</p>';
+                echo '</div>';
+            }
+        } else {
+            echo 'No products available.';
+        }
+
+        $conn->close();
+        ?>
     </div>
 </body>
 </html>
