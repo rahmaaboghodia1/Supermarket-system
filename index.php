@@ -1,51 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width , initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <div id="form">
-        <h1>Login Form</h1>
-        <form name="form" method="POST">
-            <label> Username :</label>
-            <input type = "text" id="user" name="user"> </br> </br>
-             <label> Password : </label>
-            <input type = "password" id="pass" name="pass"> </br> </br>
-            <input type="submit" id="btn" value="Login" name="submit"/>
-</form>
-</form>
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "database1";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname , 3306);
-if(isset($_POST['Submit'])){ //check if form was submitted
-    $username=$_POST["name"];
-	$Password=$_POST["pass"];
-	$sql="Select * from Login where username ='$username' and Password='$password'";
-	$result = mysqli_query($conn,$sql);		
-	if($row=mysqli_fetch_array($result))	{
-		$_SESSION["username"]=$row["name"];
-		$_SESSION["Password"]=$row["Password"];
-		header("Location:index.php");
-	}
-	else	{
-		echo "Inalid username or Password";
-	}
+if (isset($_SESSION['username'])) {
+    $welcomeMessage = "Welcome, " . $_SESSION['username'];
+} else {
+    $welcomeMessage = "Welcome to Our Online Supermarket!";
 }
 ?>
-</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermarket</title>
+    <style>
+        
+        body, h1, h2, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+       
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+        }
+
+     
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        .product-card img {
+            max-width: 50%;
+            height: auto;
+        }
+
+        .product-card h2 {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="products.php">Products</a></li>
+            <?php if (isset($_SESSION['username'])): ?>
+                <li><?php echo $welcomeMessage; ?></li>
+            <?php else: ?>
+                <li><a href="login.php">Login/Signup</a></li>
+            <?php endif; ?>
+            <li><a href="admin.php">Admin</a></li>
+        </ul>
+    </nav>
+
+  >
+    <div class="container">
+        <h1>Welcome to Our Online Supermarket!</h1>
+        
+        <div class="product-card">
+            <img src="product1.jpg" alt="Product 1">
+            <h2>Red Bull Energy Drink</h2>
+            <p>250ml(4Pack).</p>
+            <p>Price: 110 L.E</p>
+            <a href="cart.php">Add to Cart</a>
+        </div>
+        
+        <div class="product-card">
+            <img src="product2.jpg" alt="Product 2">
+            <h2>Nutella Ferrero Hazelnut Spread</h2>
+            <p>With Cocoa- 350gm</p>
+            <p>Price: 140 L.E</p>
+            <a href="cart.php">Add to Cart</a>
+        </div>
+        
+    </div>
 </body>
 </html>
-            
-
-
