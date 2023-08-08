@@ -2,15 +2,14 @@
 session_start();
 
 if (!isset($_SESSION["admin_username"])) {
-    header("Location: admin_login.php");
+    header("Location: admin.php");
     exit;
 }
-
 
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'database';
+$database = 'db1';
 
 $conn = new mysqli($host, $username, $password, $database);
 if ($conn->connect_error) {
@@ -30,12 +29,12 @@ if ($result->num_rows > 0) {
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
-
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Admin Panel</title>
 </head>
 <body>
     <h2>Welcome, <?php echo $_SESSION["admin_username"]; ?></h2>
+    <a href="addproduct.php"><button>Add Products</button></a>
     <h3>Normal Users:</h3>
     <table border="1">
         <tr>
