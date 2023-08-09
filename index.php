@@ -42,6 +42,28 @@ if(isset($_POST['Submit'])){ //check if form was submitted
 		echo "Inalid username or Password";
 	}
 }
+ if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo '<div class="product">';
+            echo '<img src="' . $row['photo'] . '" alt="' . $row['name'] . '">';
+            echo '<h4>' . $row['name'] . '</h4>';
+            echo '<p>' . $row['description'] . '</p>';
+            echo '<p>Price: $' . $row['price'] . '</p>';
+
+            echo '<form method="POST" action="add_to_cart.php">';
+            echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
+            echo '<input type="submit" value="Add to cart">';
+            echo '</form>';
+
+            echo '</div>';
+        }
+    } else {
+        echo 'No products available.';
+    }
+
+    $conn->close();
+
+	
 ?>
 </div>
 </body>
