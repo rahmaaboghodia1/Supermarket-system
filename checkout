@@ -1,0 +1,17 @@
+<?php
+session_start();
+
+echo '<h2>Your cart:</h2>';
+
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+    echo 'Your cart is empty.';
+} else {
+    // Note: you would normally fetch product details from the database here,
+    // but we'll just print product IDs for simplicity.
+    foreach ($_SESSION['cart'] as $product_id) {
+        echo '<p>Product ID: ' . $product_id . '</p>';
+    }
+}
+
+echo '<a href="checkout_confirmation.php">Proceed to Checkout</a>';
+?>
